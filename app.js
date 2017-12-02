@@ -5,8 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var request = require('request');
 var cheerio = require('cheerio');
+var request = require('request');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use(express.static('views'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -68,33 +69,7 @@ function getUpdatedToons(){
     });
 }
 
-allWebtoons = getAllToons();
-function getAllToons() {
-    var allWeeklyToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
-    allWebtoonJSONList = new Array();
-    request(allWeeklyToonsUrl,function (err, res, html) {
-        if(!err){
-            var $ = cheerio.load(html);
-            $(".thumb").each(function (i) {
-                var week = $(this).parent().parent().prev().attr('class');
-                var webtoon_link = "http://comic.naver.com" + $(this).children().first().attr('href');
-                var thumb_link = $(this).children().first().children().first().attr('src');
-                var name = $(this).next().text();
 
-                var webtoon= {
-                    name : name,
-                    thum_link : thumb_link,
-                    webtoon_link : webtoon_link,
-                    week : week
-                };
-                webtoon_string = JSON.stringify(webtoon);
-                //JSON으로 만든당.
-                allWebtoonJSONList.push(webtoon_string);
-            })
-        }
-    });
-    return(allWebtoonJSONList);
-}
 
 
 module.exports = app;
