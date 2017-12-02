@@ -38,6 +38,7 @@ router.get('/', function(req, res, next) {
         title: '니툰내툰',
         list: allWebtoons
     });
+    
 });
 
 

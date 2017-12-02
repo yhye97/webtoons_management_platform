@@ -9,7 +9,6 @@
     <p>웹툰 리스트</p>
   <a id="kakao-login-btn"></a>
   <a id="kakao-logout-btn" href="javascript:logout();">로그아웃</a>
-  <a id="save_config">저장</a>
 
 
     <table>
@@ -51,6 +50,7 @@
       // 카카오 로그인 버튼을 생성합니다.
       Kakao.Auth.getStatus(function(statusObj){
           if(statusObj.status=='connected'){
+              location.href="./mytoons";
               document.getElementById('kakao-login-btn').setAttribute('style','display: none;');
           }else{
               document.getElementById('kakao-logout-btn').setAttribute('style','display: none;');
@@ -62,11 +62,11 @@
           container: '#kakao-login-btn',
           size:'small',
           success: function(authObj) {
-              alert(JSON.stringify(authObj));
+              //alert(JSON.stringify(authObj));
               location.reload();
           },
           fail: function(err) {
-              alert(JSON.stringify(err));
+              alert("로그인 실패!");
           }
       });
 
