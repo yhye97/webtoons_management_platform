@@ -4,17 +4,40 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body>
     <h1><%= title %></h1>
     <p><%= title %></p>
+
+    <table>
     <%
-        for(name in list){
-    %>
-    <%= name+ "=" + list[name] %>
-    </br>
+    var current = "";
+    for(jsonString in list){
+        var A=JSON.parse(list[jsonString]);
+        if(current!=A.week){
+            if(current!=""){
+        %>
+        </tr>
+        <% } %>
+        <tr>
+            <th><%= A.week %></th>
+        <% } %>
+            <td>
+            <a href="<%= A.webtoon_link %>">
+                <img src="<%= A.thum_link %>"/>
+            </a>
+            <%= A.name %>
+            </td>
+        <%
+        if(current!=A.week) {
+            current = A.week;
+            %>
+
     <%
         }
+    }
     %>
-    <br>
+        </tr>
+    </table>
+    </br>
+
   </body>
 </html>

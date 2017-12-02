@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 
     res.render('index', {
         title: '니툰내툰',
-        list: updatedToon
+        list: allWebtoons
     });
 });
 
