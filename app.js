@@ -5,15 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var request = require('request');
+var cheerio = require('cheerio');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-var crawler = require('./controllers/webtoon_crawler');
-//크롤러
-var myCrawler = new crawler();
-myCrawler.run();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,5 +44,30 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+updatedToon = new Array();
+
+getUpdatedToons();
+
+function getUpdatedToons(){
+
+    var allToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
+    request(allToonsUrl, function(err, res, html){
+        if(!err){
+            var $ = cheerio.load(html);
+
+            $(".thumb").has('.ico_updt').next().each(function() {
+                var link = $(this);
+
+                var toonName = link.text();
+                var toonHref = link.attr('href');
+                console.log(toonName + ' -> ' + toonHref);
+                updatedToon[toonName]=toonHref;
+            });
+
+        }
+    });
+}
+
 
 module.exports = app;
