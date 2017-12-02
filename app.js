@@ -9,6 +9,11 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var crawler = require('./controllers/webtoon_crawler');
+//크롤러
+var myCrawler = new crawler();
+myCrawler.run();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
