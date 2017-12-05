@@ -7,9 +7,9 @@
   </head>
     <h1><%= title %></h1>
     <p>웹툰 리스트</p>
-  <a id="kakao-login-btn"></a>
-  <a id="kakao-logout-btn" href="javascript:logout();">로그아웃</a>
 
+
+    <a href="/auth/login/kakao" class="btn btn-block btn-lg btn-warning btn_login">로그인</a>
 
     <table>
     <%
@@ -43,42 +43,6 @@
     </table>
     </br>
 
-  <script type='text/javascript'>
-      //<![CDATA[
-      // 사용할 앱의 JavaScript 키를 설정해 주세요.
-      Kakao.init('602377cd7aa60a82eeebda466560f3e5');
-      // 카카오 로그인 버튼을 생성합니다.
-      Kakao.Auth.getStatus(function(statusObj){
-          if(statusObj.status=='connected'){
-              location.href="./mytoons";
-              document.getElementById('kakao-login-btn').setAttribute('style','display: none;');
-          }else{
-              document.getElementById('kakao-logout-btn').setAttribute('style','display: none;');
-              document.getElementById('save_config').setAttribute('style','display: none;');
-          }
-      });
-
-      Kakao.Auth.createLoginButton({
-          container: '#kakao-login-btn',
-          size:'small',
-          success: function(authObj) {
-              //alert(JSON.stringify(authObj));
-              location.reload();
-          },
-          fail: function(err) {
-              alert("로그인 실패!");
-          }
-      });
-
-      function logout(){
-          Kakao.Auth.logout(function () {
-              location.reload();
-          });
-
-      }
-      //]]>
-
-  </script>
 
   </body>
 

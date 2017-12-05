@@ -5,11 +5,24 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mysql      = require('mysql');
 var cheerio = require('cheerio');
 var request = require('request');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var mytoons = require('./routes/mytoons');
+var passport = require('passport');
+var setting = require('./routes/setting');
+var session = require('express-session');
+
+passport.serializeUser(function(user, done) {
+    console.log('serialize');
+    done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+    console.log('deserialize');
+    done(null, obj);
+});
 
 var app = express();
 
@@ -25,9 +38,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+connection = mysql.createConnection({
+    host     : 'nomock.com',
+    user     : 'ytmt',
+    password : 'ytmt',
+    port     : 3306,
+    database : 'YTMT'
+});
+
+app.use(session({
+    secret: 'secrettexthere',
+    saveUninitialized: true,
+    resave: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', index);
 app.use('/users', users);
 app.use('/mytoons', mytoons);
+app.use('/setting', setting);
 
 //app.use(express.static('views'));
 
@@ -48,29 +78,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-updatedToon = new Array();
-
-getUpdatedToons();
-
-function getUpdatedToons(){
-
-    var allToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
-    request(allToonsUrl, function(err, res, html){
-        if(!err){
-            var $ = cheerio.load(html);
-
-            $(".thumb").has('.ico_updt').next().each(function() {
-                var link = $(this);
-
-                var toonName = link.text();
-                var toonHref = link.attr('href');
-                updatedToon[toonName]=toonHref;
-            });
-
-        }
-    });
-}
 
 
 

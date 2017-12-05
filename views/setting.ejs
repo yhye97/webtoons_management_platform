@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>설정</title>
+</head>
+<h1>내툰</h1>
+<p>추가하거나 제거할 웹툰을 눌러주세요.</p>
+
+<table>
+
+    <%
+    var current = "";
+    for(toonName in list) {
+        var A = list[toonName];
+        %>
+    <%= A %></br>
+    <%
+    }
+        %>
+
+</table>
+</br>
+
+<body>
+
+</body>
+</html>
