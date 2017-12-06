@@ -17,8 +17,8 @@ passport.use(new KakaoStrategy({
 
         console.log("(!)로그인 : " + profile._json.id+"("+profile._json.properties.nickname +")");
         return done(null, {
-            'user_id': profile.auth_id,
-            'nickname': profile.auth_name
+            'user_id': profile._json.id,
+            'nickname': profile._json.properties.nickname
         });
     }
 ));

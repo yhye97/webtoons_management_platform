@@ -10,15 +10,16 @@
 <p>추가한 리스트</p>
 
 <a href="/auth/logout/kakao">로그아웃</a>
-<a href="/setting">세팅</a>
+<a href="/setting/">세팅</a>
 </br>
 
 <table>
+
     <%
-    var current = "";
-    for(updated in list){
+
+    for(i=0;i<mytoons.length; i++){
     %>
-        <%= updated + " : " + list[updated] %><br>
+        <%= mytoons[i].name + " : " + mytoons[i].week %><br>
     <%
     }
     %>

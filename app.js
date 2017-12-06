@@ -16,12 +16,12 @@ var setting = require('./routes/setting');
 var session = require('express-session');
 
 passport.serializeUser(function(user, done) {
-    console.log('serialize');
+    console.log('serialized');
     done(null, user);
 });
-passport.deserializeUser(function(obj, done) {
-    console.log('deserialize');
-    done(null, obj);
+passport.deserializeUser(function(user, done) {
+    console.log('deserialized');
+    done(null, user);
 });
 
 var app = express();
