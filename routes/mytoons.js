@@ -32,7 +32,7 @@ function getUpdatedToons(cb){
 }
 
 function getMyToons(id,cb){
-    var sqlquery = 'SELECT name, thum_link, webtoon_link, week, last, latest FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;';
+    var sqlquery = 'SELECT name, thum_link, webtoon_link, week, last, latest, t.toon_index AS toon_index FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;';
     var mylist = new Array();
     connection.query(sqlquery,id,function(err,rows,result){
         if(!err){
@@ -40,7 +40,7 @@ function getMyToons(id,cb){
             cb(mylist);
         }else{
             console.log("내 웹툰 리스트 가져오는데 실패했습니다!");
-            throw err;
+            //throw err;
         }
     });
 }

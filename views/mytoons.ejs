@@ -27,11 +27,8 @@
 </head>
 <h1>내툰</h1>
 <p>추가한 리스트</p>
-
 <a href="/auth/logout/kakao">로그아웃</a>
 <a href="/setting/">세팅</a>
-</br>
-
 <table>
     <tr>
         <th>썸네일</th>
@@ -44,11 +41,10 @@
     %><tr>
         <td class="toon_thumbnail"><image src="<%= mytoons[i].thum_link%>"/></td>
         <td class="toon_name"><%= mytoons[i].name %></td>
-        <td class="toon_last"><%= mytoons[i].last %>화</td>
-        <td class="toon_next"><%= mytoons[i].last +1 %>화</td>
-        <td class="toon_latest"><%= mytoons[i].latest %>화</td>
+        <td class="toon_last"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last %>"><%= mytoons[i].last %>화</a></td>
+        <td class="toon_next"><% if(mytoons[i].last+1 <= mytoons[i].latest){ %> <a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last+1 %>"><%= mytoons[i].last +1 %>화</a><% } %></td>
+        <td class="toon_latest"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].latest %>"><%= mytoons[i].latest %>화</a></td>
     </tr>
-    <br>
     <% } %>
 </table>
 

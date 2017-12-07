@@ -14,6 +14,7 @@ var mytoons = require('./routes/mytoons');
 var passport = require('passport');
 var setting = require('./routes/setting');
 var session = require('express-session');
+var toonviewer = require('./routes/toonviewer')
 
 passport.serializeUser(function(user, done) {
     console.log('serialized');
@@ -58,6 +59,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/mytoons', mytoons);
 app.use('/setting', setting);
+app.use('/toonviewer', toonviewer);
 
 //app.use(express.static('views'));
 
