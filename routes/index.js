@@ -54,16 +54,49 @@ router.get('/auth/logout/kakao',function (req,res) {
     res.redirect('/');
 })
 
-var allWebtoons;
+allWebtoons = new Array();
+
+function getLatestToon(titleid, day ,cb) {
+    var url = "http://comic.naver.com/webtoon/list.nhn?titleId=" + titleid+ "&weekday="+day;
+    console.log(url);
+        request(url, function (err, res, html) {
+            if (!err) {
+                var $ = cheerio.load(html);
+                var latestLink = 'http://comic.naver.com';
+                var latest;
+                var t = $('#content > table > tbody > tr > td.title > a').first().each(function () {
+                    latestLink += $(this).attr('href');
+                    setTimeout(function () {},100);
+                    latest = latestLink.split('?')[1].split('&')[1].split('=')[1];
+                });
+
+                var latestImage;
+                $('#content > table > tbody > tr > td > a > img').first().each(function () {
+                    latestImage = $(this).attr('src');
+                    setTimeout(function () {},100);
+                });
+
+                cb({
+                    latest: latest,
+                    latestLink: latestLink,
+                    latestImage: latestImage
+                });
+
+            } else {
+                console.log("최신화 못가져왔습니다.");
+                //throw err;
+            }
+        });
+}
 
 function getAllToons() {
     var allWeeklyToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
-    //connection.connect();
-    allWebtoonJSONList = new Array();
+    allWebtoonList = new Array();
     request(allWeeklyToonsUrl,function (err, res, html) {
         if(!err){
             var $ = cheerio.load(html);
-            $(".thumb").each(function (i) {
+            var p = Promise.resolve();
+            var eachs = $(".thumb").each(function (i) {
                 var week = $(this).parent().parent().prev().attr('class');
                 var webtoon_link = "http://comic.naver.com" + $(this).children().first().attr('href');
                 var thumb_link = $(this).children().first().children().first().attr('src');
@@ -75,25 +108,37 @@ function getAllToons() {
                     name : name,
                     thum_link : thumb_link,
                     webtoon_link : webtoon_link,
-                    week : week
+                    week : week,
+                    latest : 0
                 };
-                webtoon_string = JSON.stringify(webtoon);
 
-                connection.query("INSERT INTO toon SET ? ON DUPLICATE KEY UPDATE toon_index=toon_index",
-                    webtoon);
-
-                //JSON으로 만든당.
-                allWebtoonJSONList.push(webtoon_string);
-            })
+                allWebtoonList.push(webtoon);
+            });
+            p.then(function() {
+                i = 0;
+                allWebtoonList.forEach(function (webtoon) {
+                    getLatestToon(webtoon.toon_index, webtoon.week, function (latest_toon) {
+                        webtoon.latest = latest_toon.latest;
+                        console.log(i + " = " + webtoon.name + " : " + webtoon.latest)
+                        i++;
+                        connection.query("INSERT INTO toon SET ? ON DUPLICATE KEY UPDATE latest=?",
+                            [webtoon,webtoon.latest], function () {
+                                if(err){
+                                    console.log("웹툰 갱신중 에러!");
+                                }
+                            });
+                    });
+                })
+            });
         }
-        //connection.end();
     });
-    allWebtoons = allWebtoonJSONList;
+    allWebtoons = allWebtoonList;
 }
 
 getAllToons();
-setInterval(getAllToons,5000);
-//5초에 한번 수행
+//처음 한번 수행
+setInterval(getAllToons,5*60*1000);
+//5분에 한번 수행
 
 /* GET home page. */
 router.get('/',

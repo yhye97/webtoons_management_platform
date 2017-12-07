@@ -14,25 +14,24 @@
     <table>
     <%
     var current = "";
-    for(jsonString in list){
-        var A=JSON.parse(list[jsonString]);
-        if(current!=A.week){
+    for(webtoon in list){
+        if(current!=list[webtoon].week){
             if(current!=""){
         %>
         </tr>
         <% } %>
         <tr>
-            <th><%= A.week %></th>
+            <th><%= list[webtoon].week %></th>
         <% } %>
             <td>
-            <a href="<%= A.webtoon_link %>">
-                <img alt="img" width="83" height="90" src="<%= A.thum_link %>"/>
+            <a href="<%= list[webtoon].webtoon_link %>">
+                <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
             </a>
-            <%= A.name %>
+            <%= list[webtoon].name %>
             </td>
         <%
-        if(current!=A.week) {
-            current = A.week;
+        if(current!=list[webtoon].week) {
+            current = list[webtoon].week;
             %>
 
     <%

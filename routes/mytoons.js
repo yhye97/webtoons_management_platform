@@ -7,6 +7,7 @@ var router = express.Router();
 function getUpdatedToons(cb){
     var allToons = new Array();
     var allToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
+
     request(allToonsUrl, function(err, res, html){
         if(!err){
             var $ = cheerio.load(html);
@@ -18,7 +19,6 @@ function getUpdatedToons(cb){
                     var toonHref = link.attr('href');
 
                     allToons[toonName] = toonHref;
-                    //connection.query("");
                 });
             });
             p.then(function(){
@@ -32,8 +32,8 @@ function getUpdatedToons(cb){
 }
 
 function getMyToons(id,cb){
-    var sqlquery = 'SELECT name, thum_link, webtoon_link, week, last FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;';
-    var mylist;
+    var sqlquery = 'SELECT name, thum_link, webtoon_link, week, last, latest FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;';
+    var mylist = new Array();
     connection.query(sqlquery,id,function(err,rows,result){
         if(!err){
             mylist=rows;
@@ -48,32 +48,24 @@ function getMyToons(id,cb){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    async.series(
-        [
-        function(callback){
-            getMyToons(req.user.user_id, function (mytoon_list) {
-                callback(null,mytoon_list);
-            });
-        },
-        function(callback){
-            getUpdatedToons(function (updated_list) {
-                callback(null,updated_list);
-            });
-        }
-        ],
-        function(err, results){
-        console.log(results);
-            res.render('mytoons', {
-                mytoons: results[0],
-                updatedtoons: results[1]
-            });
-        }
-    );
-
-
-
-
-
+    if(!req.isAuthenticated()){
+        res.redirect('/');
+    }else{
+        async.series(
+            [
+                function(callback){
+                    getMyToons(req.user.user_id, function (mytoon_list) {
+                        callback(null,mytoon_list);
+                    });
+                }
+            ],
+            function(err, results){
+                res.render('mytoons', {
+                    mytoons: results[0]
+                });
+            }
+        );
+    }
 });
 
 module.exports = router;

@@ -3,23 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>설정</title>
+    <style>
+        .registered{
+            background-color: #AAAAAA;
+        }
+    </style>
 </head>
 <h1>내툰</h1>
-<p>추가하거나 제거할 웹툰을 눌러주세요.</p>
+<p>추가하거나 제거할 웹툰을 선택해주세요.</p>
 
 <table>
-
     <%
     var current = "";
-    for(toonName in mytoons) {
-        var A = mytoons[toonName];
-        %>
-    <%= A %></br>
-    <%
-    }
+    for(webtoon in alltoons){
+        if(current!=alltoons[webtoon].week){
+            if(current!=""){
+    %>
+    </tr>
+        <% } %>
+    <tr>
+        <th><%= alltoons[webtoon].week %></th>
+        <% } %>
+        <td class="<%
+        for(i=0;i<mytoons.length;i++){
+        if(mytoons[i].name == alltoons[webtoon].name){
+        %>registered<%
+            break;
+            }
+        }
+        %>">
+            <form method="post" action="/setting/toggle_toon">
+                <input type="hidden" name="toon_index" value="<%= alltoons[webtoon].toon_index %>">
+                <input  TYPE="IMAGE" src="<%= alltoons[webtoon].thum_link %>" name="Submit" value="Submit"  align="absmiddle">
+            </form>
+            <%= alltoons[webtoon].name; %>
+        </td>
+        <%
+        if(current!=alltoons[webtoon].week) {
+            current = alltoons[webtoon].week;
         %>
 
+        <%
+        }
+        }
+        %>
+    </tr>
+
 </table>
+</form>
 </br>
 
 <body>
