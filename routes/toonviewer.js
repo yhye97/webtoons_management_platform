@@ -44,14 +44,14 @@ router.get('/:toon_index/:num',function(req,res){
     updateLastWebtoon(req.params.toon_index, req.user.user_id, req.params.num, function(){
         var toonUrl = "http://comic.naver.com/webtoon/detail.nhn?titleId=" + req.params.toon_index + "&no=" + req.params.num;
         res.redirect(toonUrl);
-        /*
+
         getToonImages(req.params.toon_index, req.params.num, function(imageList){
             res.render('toonviewer',{
                 title: "zzz",
                 images: imageList
             });
         });
-        */
+
     })
 });
 

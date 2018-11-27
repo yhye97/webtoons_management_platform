@@ -36,14 +36,14 @@
         <th>최근에 본 화</th>
         <th>다음화</th>
         <th>최신화</th>
-    </tr><%
-    for(i=0;i<mytoons.length; i++){
-    %><tr>
-        <td class="toon_thumbnail"><image src="<%= mytoons[i].thum_link%>"/></td>
-        <td class="toon_name"><%= mytoons[i].name %></td>
-        <td class="toon_last"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last %>"><%= mytoons[i].last %>화</a></td>
-        <td class="toon_next"><% if(mytoons[i].last+1 <= mytoons[i].latest){ %> <a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last+1 %>"><%= mytoons[i].last +1 %>화</a><% } %></td>
-        <td class="toon_latest"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].latest %>"><%= mytoons[i].latest %>화</a></td>
+    </tr>
+           <% for(i=0;i<mytoons.length; i++){
+        %><tr>
+            <td class="toon_thumbnail"><image src="<%= mytoons[i].thum_link%>"/></td>
+            <td class="toon_name"><%= mytoons[i].name %></td>
+            <td class="toon_last"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last %>"><%= mytoons[i].last %>화</a></td>
+            <td class="toon_next"><% if(mytoons[i].last+1 <= mytoons[i].latest){ %> <a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last+1 %>"><%= mytoons[i].last +1 %>화</a><% } %></td>
+            <td class="toon_latest"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].latest %>"><%= mytoons[i].latest %>화</a></td>
     </tr>
     <% } %>
 </table>

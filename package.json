@@ -27,5 +27,14 @@
     "serve-favicon": "^2.4.5",
     "spooky": "^0.2.5",
     "tiny-jsonrpc": "^2.0.1"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "http://khuhub.khu.ac.kr/2016104140/YTMT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

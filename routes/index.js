@@ -7,15 +7,16 @@ var passport = require('passport'),
     KakaoStrategy = require('passport-kakao').Strategy;
 
 passport.use(new KakaoStrategy({
-        clientID : '5cebedb504cf4d1aeeadff0b55f1589d',
-        callbackURL :'http://localhost:3000/auth/login/kakao/callback',
-        clientSecret : 'tUL5KhahqDPD8fvlSlbVdRY3C4WyblNq'
+        clientID : 'bd2e610396fb7bbb84cf91a786b3cc72',
+        callbackURL :'/auth/login/kakao/callback'
+       // clientSecret : 'eUtJGtlLoCZJufevp3LKfDP0KOtZUV7R'
     },
     function(accessToken, refreshToken,params, profile, done){
         //사용자 정보는 profile에
         loginByThirdparty(accessToken, refreshToken, profile);
 
         console.log("(!)로그인 : " + profile._json.id+"("+profile._json.properties.nickname +")");
+        //return done(null,profile)
         return done(null, {
             'user_id': profile._json.id,
             'nickname': profile._json.properties.nickname
@@ -25,7 +26,8 @@ passport.use(new KakaoStrategy({
 
 // kakao 로그인
 router.get('/auth/login/kakao',
-    passport.authenticate('kakao',{state: "myStateValue"})
+   // passport.authenticate('kakao',{state: "myStateValue"})
+   passport.authenticate('kakao')
 );
 
 // kakao 로그인 연동 콜백

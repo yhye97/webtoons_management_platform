@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var mysql      = require('mysql');
 var cheerio = require('cheerio');
 var request = require('request');
@@ -15,6 +14,8 @@ var passport = require('passport');
 var setting = require('./routes/setting');
 var session = require('express-session');
 var toonviewer = require('./routes/toonviewer')
+
+//port
 
 passport.serializeUser(function(user, done) {
     console.log('serialized');
@@ -40,11 +41,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 connection = mysql.createConnection({
-    host     : 'nomock.com',
-    user     : 'ytmt',
-    password : 'ytmt',
+    host     : 'localhost',
+    user     : 'root',
+    password : 'hs970010!',
     port     : 3306,
-    database : 'YTMT'
+    database : 'ytmt'
 });
 
 app.use(session({
@@ -81,7 +82,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-
-
+var server = app.listen(3000);
 module.exports = app;
+

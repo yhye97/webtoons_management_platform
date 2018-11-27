@@ -1,5 +1,6 @@
 var express = require('express');
 var cheerio = require('cheerio');
+
 var request = require('request');
 var async = require('async');
 var router = express.Router();

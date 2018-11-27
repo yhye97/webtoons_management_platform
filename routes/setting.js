@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
 function addMyToons(id,index,cb){
     connection.query("INSERT INTO user_toon_relation SET ?;",
         {user_id : id,toon_index : index, last : 1},function (err) {
