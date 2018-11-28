@@ -11,6 +11,7 @@
     "body-parser": "^1.18.3",
     "casperjs": "^1.1.4",
     "cheerio": "^1.0.0-rc.2",
+    "cheerio-httpcli": "^0.7.3",
     "cookie-parser": "^1.4.3",
     "debug": "^2.6.9",
     "ejs": "^2.5.9",
