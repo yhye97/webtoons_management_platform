@@ -13,7 +13,8 @@ var mytoons = require('./routes/mytoons');
 var passport = require('passport');
 var setting = require('./routes/setting');
 var session = require('express-session');
-var toonviewer = require('./routes/toonviewer')
+var toonviewer = require('./routes/toonviewer');
+
 
 //port
 
@@ -61,6 +62,7 @@ app.use('/users', users);
 app.use('/mytoons', mytoons);
 app.use('/setting', setting);
 app.use('/toonviewer', toonviewer);
+//app.use('/daum', daum);
 
 //app.use(express.static('views'));
 

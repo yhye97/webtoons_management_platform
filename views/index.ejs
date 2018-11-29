@@ -8,13 +8,13 @@
     <h1><%= title %></h1>
     <p>웹툰 리스트</p>
 
-
     <a href="/auth/login/kakao" class="btn btn-block btn-lg btn-warning btn_login">로그인</a>
 
     <table>
     <%
     var current = "";
     for(webtoon in list){
+
         if(current!=list[webtoon].week){
             if(current!=""){
         %>

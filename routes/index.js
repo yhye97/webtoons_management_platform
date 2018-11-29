@@ -3,6 +3,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 var router = express.Router();
 var mysql      = require('mysql');
+var client = require('cheerio-httpcli');
 var passport = require('passport'),
     KakaoStrategy = require('passport-kakao').Strategy;
 
@@ -41,8 +42,7 @@ router.get('/auth/login/kakao/callback',
 
 function loginByThirdparty(accessToken, refreshToken, profile) {
     var stmt_duplicated = 'INSERT INTO user(id) VALUES(?) ON DUPLICATE KEY UPDATE id=?;'
-
-    connection.query(stmt_duplicated, [profile._json.id,profile._json.id] , function (err, result) {
+    connection.query(stmt_duplicated, [profile._json.id] , function (err, result) {
         if (err) {
             console.log("로그인 쿼리중 에러 : " + err);
         } else {
@@ -92,8 +92,180 @@ function getLatestToon(titleid, day ,cb) {
 }
 
 function getAllToons() {
-    var allWeeklyToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
     allWebtoonList = new Array();
+//월요일 다음 웹툰
+    var mon='mon';
+    var daum = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${mon}?timeStamp=1515819276574`;
+    var site='daum';
+    var mon_name='MON';
+    client.fetch(daum, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+        console.log(list);
+        list.forEach(function(item, idx){
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : mon_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+    });
+//화요일 다음 웹툰
+    var tue='tue';
+    var tue_name='TUE';
+    var daum1 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${tue}?timeStamp=1515819276574`;
+
+    client.fetch(daum1, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+
+        list.forEach(function(item, idx){
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : tue_name,
+                site : site,
+                latest : 0
+            };
+
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+//수요일 다음 웹툰
+    var wed='wed';
+    var wed_name='WED';
+    var daum2 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${wed}?timeStamp=1515819276574`;
+
+    client.fetch(daum2, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+
+        list.forEach(function(item, idx){
+            console.log(item.id + ' ' + item.title + ' ' + wed);
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : wed_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+//목요일 다음 웹툰
+    var thu='thu';
+    var daum3 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${thu}?timeStamp=1515819276574`;
+    var thu_name='THU';
+    client.fetch(daum3, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+        list.forEach(function(item, idx){
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : thu_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+//금요일 다음 웹툰
+    var fri='fri';
+    var daum4 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${fri}?timeStamp=1515819276574`;
+    var fri_name='FRI';
+    client.fetch(daum4, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list1 = data["data"];
+
+        list1.forEach(function(item, idx){
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : fri_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+//토요일 다음 웹툰
+    var sat='sat';
+    var daum5 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${sat}?timeStamp=1515819276574`;
+    var sat_name='SAT';
+    client.fetch(daum5, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+
+        list.forEach(function(item, idx){
+            //다음 웹툰 아이디, 제목, 요일
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : sat_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+//일요일 다음 웹툰
+    var sun='sun';
+    var daum6 = `http://webtoon.daum.net/data/pc/webtoon/list_serialized/${sun}?timeStamp=1515819276574`;
+    var sun_name='SUN'
+    client.fetch(daum6, {}, function (err, $, res, body) {
+        var data = JSON.parse(body);
+        var list = data["data"];
+
+        list.forEach(function(item, idx){
+            //다음 웹툰 아이디, 제목, 요일
+            var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
+            var webtoon= {
+                toon_index: item.id,
+                name : item.title,
+                thum_link : webtoon_link,
+                webtoon_link : webtoon_link,
+                week : sun_name,
+                site : site,
+                latest : 0
+            };
+            allWebtoonList.push(webtoon);
+        });
+
+    });
+
+    var allWeeklyToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
     request(allWeeklyToonsUrl,function (err, res, html) {
         if(!err){
             var $ = cheerio.load(html);
@@ -104,13 +276,14 @@ function getAllToons() {
                 var thumb_link = $(this).children().first().children().first().attr('src');
                 var name = $(this).next().text();
                 var titleid = webtoon_link.split('?')[1].split('&')[0].split('=')[1];
-
+                var site = 'naver'
                 var webtoon= {
                     toon_index: titleid,
                     name : name,
                     thum_link : thumb_link,
                     webtoon_link : webtoon_link,
                     week : week,
+                    site : site,
                     latest : 0
                 };
 
@@ -135,7 +308,7 @@ function getAllToons() {
         }
     });
     allWebtoons = allWebtoonList;
-}
+};
 
 getAllToons();
 //처음 한번 수행
