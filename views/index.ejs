@@ -3,19 +3,40 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-      <script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
+      <script src="http://developers.kakao.com/sdk/js/kakao.min.js">
+      function daum_click()
+      {
+          if(Daum_webtoons.display == "none")
+            Daum_webtoons.display == "block"
+            if(Daum_webtoons.display = "block")
+            Daum_webtoons.display == "none"
+      }
+        </script>
   </head>
     <h1><%= title %></h1>
     <p>웹툰 리스트</p>
 
     <a href="/auth/login/kakao" class="btn btn-block btn-lg btn-warning btn_login">로그인</a>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <font size = 60>
+      다음 웹툰
+    </font>
+
+
+    <a onclick="Daum_webtoons.style.display=(Daum_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+    <img src ='/images/daumicon.png' width="83" height="90" onclick="daum_click" />
+</a>
+<div style="display:none" id="Daum_webtoons">
     <table>
     <%
     var current = "";
     for(webtoon in list){
 
-        if(current!=list[webtoon].week){
+        if(current!=list[webtoon].week && list[webtoon].site == 'daum'){
             if(current!=""){
         %>
         </tr>
@@ -23,12 +44,20 @@
         <tr>
             <th><%= list[webtoon].week %></th>
         <% } %>
+        <%
+        if(list[webtoon].site == 'daum')
+        {
+          %>
             <td>
             <a href="<%= list[webtoon].webtoon_link %>">
                 <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
             </a>
             <%= list[webtoon].name %>
             </td>
+            <%
+          }
+          %>
+
         <%
         if(current!=list[webtoon].week) {
             current = list[webtoon].week;
@@ -41,7 +70,58 @@
         </tr>
     </table>
     </br>
+  </div>
+<br>
 
+  <font size = 60>
+    네이버 웹툰
+  </font>
+      <a onclick="Naver_webtoons.style.display=(Naver_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+    <img src ='/images/navericon.png' width="83" height="90"/>
+  </a>
+  <div id="Naver_webtoons" style = "display:none">
+
+      <table>
+      <%
+      var current = "";
+      for(webtoon in list){
+
+          if(current!=list[webtoon].week && list[webtoon].site == 'naver'){
+              if(current!=""){
+          %>
+          </tr>
+          <% } %>
+          <tr>
+              <th><%= list[webtoon].week %></th>
+          <% } %>
+          <%
+          if(list[webtoon].site == 'naver')
+          {
+            %>
+              <td>
+              <a href="<%= list[webtoon].webtoon_link %>">
+                  <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
+              </a>
+              <%= list[webtoon].name %>
+              </td>
+              <%
+            }
+            %>
+
+          <%
+          if(current!=list[webtoon].week) {
+              current = list[webtoon].week;
+              %>
+
+      <%
+          }
+      }
+      %>
+          </tr>
+      </table>
+      </br>
+
+    </div>
 
   </body>
 
