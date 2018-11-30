@@ -15,9 +15,7 @@ var setting = require('./routes/setting');
 var session = require('express-session');
 var toonviewer = require('./routes/toonviewer');
 
-
 //port
-
 passport.serializeUser(function(user, done) {
     console.log('serialized');
     done(null, user);
@@ -44,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : 'hs970010!',
+    password : 'password',
     port     : 3306,
     database : 'ytmt'
 });
@@ -62,8 +60,6 @@ app.use('/users', users);
 app.use('/mytoons', mytoons);
 app.use('/setting', setting);
 app.use('/toonviewer', toonviewer);
-//app.use('/daum', daum);
-
 //app.use(express.static('views'));
 
 // catch 404 and forward to error handler

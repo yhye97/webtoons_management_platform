@@ -33,7 +33,11 @@ function getUpdatedToons(cb){
 }
 
 function getMyToons(id,cb){
-    var sqlquery = 'SELECT name, thum_link, webtoon_link, week, last, latest, t.toon_index AS toon_index FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;';
+    //var sql = "INSERT INTO `user` (id) VALUES (?)";
+    //var kid=[profile._json.id];
+    //connection.query(sql,kid,function(err,result){
+    var sqlquery = "SELECT name, thum_link, webtoon_link, week, last, t.toon_index AS toon_index FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;";
+    //var sqlquery = "SELECT name, thum_link, webtoon_link, week, last, latest, t.toon_index AS toon_index FROM user u, user_toon_relation ur, toon t WHERE u.id=? && u.id=ur.user_id && t.toon_index=ur.toon_index;";
     var mylist = new Array();
     connection.query(sqlquery,id,function(err,rows,result){
         if(!err){

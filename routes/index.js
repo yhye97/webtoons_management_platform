@@ -9,8 +9,8 @@ var passport = require('passport'),
 
 passport.use(new KakaoStrategy({
         clientID : 'bd2e610396fb7bbb84cf91a786b3cc72',
-        callbackURL :'/auth/login/kakao/callback'
-       // clientSecret : 'eUtJGtlLoCZJufevp3LKfDP0KOtZUV7R'
+        callbackURL :'/auth/login/kakao/callback',
+       clientSecret : 'eUtJGtlLoCZJufevp3LKfDP0KOtZUV7R'
     },
     function(accessToken, refreshToken,params, profile, done){
         //사용자 정보는 profile에
@@ -41,8 +41,11 @@ router.get('/auth/login/kakao/callback',
 );
 
 function loginByThirdparty(accessToken, refreshToken, profile) {
-    var stmt_duplicated = 'INSERT INTO user(id) VALUES(?) ON DUPLICATE KEY UPDATE id=?;'
-    connection.query(stmt_duplicated, [profile._json.id] , function (err, result) {
+    //예전 코드는 MySQL 버젼이 맞지 않음
+  //  var sql = 'INSERT INTO `user`(id) VALUES(?) ON DUPLICATE KEY(PRIMARY) UPDATE id=(?);'
+    var sql = "INSERT INTO `user` (id) VALUES (?) ON DUPLICATE KEY UPDATE id=id";
+    var kid=[profile._json.id];
+    connection.query(sql,kid,function(err,result){
         if (err) {
             console.log("로그인 쿼리중 에러 : " + err);
         } else {
@@ -59,7 +62,7 @@ router.get('/auth/logout/kakao',function (req,res) {
 allWebtoons = new Array();
 
 function getLatestToon(titleid, day ,cb) {
-    var url = "http://comic.naver.com/webtoon/list.nhn?titleId=" + titleid+ "&weekday="+day;
+    /*var url = "http://comic.naver.com/webtoon/list.nhn?titleId=" + titleid+ "&weekday="+day;
     console.log(url);
         request(url, function (err, res, html) {
             if (!err) {
@@ -88,7 +91,7 @@ function getLatestToon(titleid, day ,cb) {
                 console.log("최신화 못가져왔습니다.");
                 //throw err;
             }
-        });
+        });*/
 }
 
 function getAllToons() {
@@ -150,7 +153,7 @@ function getAllToons() {
         var list = data["data"];
 
         list.forEach(function(item, idx){
-            console.log(item.id + ' ' + item.title + ' ' + wed);
+
             var webtoon_link='http://webtoon.daum.net/webtoon/view/'+item.nickname.toString();
             var webtoon= {
                 toon_index: item.id,
@@ -279,23 +282,30 @@ function getAllToons() {
                     site : site,
                     latest : 0
                 };
-
                 allWebtoonList.push(webtoon);
             });
             p.then(function() {
                 i = 0;
                 allWebtoonList.forEach(function (webtoon) {
-                    getLatestToon(webtoon.toon_index, webtoon.week, function (latest_toon) {
-                        webtoon.latest = latest_toon.latest;
-                        console.log(i + " = " + webtoon.name + " : " + webtoon.latest)
-                        i++;
-                        connection.query("INSERT INTO toon SET ? ON DUPLICATE KEY UPDATE latest=?",
-                            [webtoon,webtoon.latest], function () {
-                                if(err){
-                                    console.log("웹툰 갱신중 에러!");
-                                }
+                   // getLatestToon(webtoon.toon_index, webtoon.week, function (latest_toon) {
+                     //   webtoon.latest = latest_toon.latest;
+                   //i++;
+                        //console.log(i + " = " + webtoon.name + " : " + webtoon.latest);
+                        var sql= "INSERT INTO `toon` (toon_index, name, thum_link, webtoon_link, week, site, latest) VALUES(?) ON DUPLICATE KEY UPDATE latest=latest";
+                        var values=[webtoon.toon_index, webtoon.name, webtoon.thum_link, webtoon.webtoon_link,webtoon.week, webtoon.site, webtoon.latest];
+                             connection.query(sql,[values],function(err,result){
+                                 if (err) {
+                                     console.log("웹툰 DB 에러 : " + err);
+                                 } else {
+                                     console.log("웹툰 DB처리 완료!");
+                                 }
+                            //[webtoon,webtoon.latest], function () {
+                             //   if (err) {
+                              //      console.log("웹툰 갱신중 에러!");
+                                //}
+                           // }
                             });
-                    });
+                    //});
                 })
             });
         }
