@@ -4,7 +4,7 @@
     <title>내툰</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
-        .toon_latest,.toon_next,.toon_last,.toon_name,.toon_thumbnail{
+        .toon_name,.toon_thumbnail{
             width:10%;
         }
 
@@ -28,24 +28,30 @@
 <h1>내툰</h1>
 <p>추가한 리스트</p>
 <a href="/auth/logout/kakao">로그아웃</a>
-<a href="/setting/">세팅</a>
+<a href="/setting/">수정하기</a>
 <table>
     <tr>
         <th>썸네일</th>
         <th>웹툰명</th>
-        <th>최근에 본 화</th>
-        <th>다음화</th>
-        <th>최신화</th>
+        <th>요일</th>
+        <th>사이트</th>
+        <th>바로가기</th>
     </tr>
+    <!--로그인한 회원이 내툰에 웹툰이 없을시-->
+    <%if (mytoons.length==0){
+    %>
+        <th>내툰리스트에 웹툰이 없습니다! 수정하기 버튼을 눌러서 추가하세요!</th>
+    <%}%>
            <% for(i=0;i<mytoons.length; i++){
         %><tr>
             <td class="toon_thumbnail"><image src="<%= mytoons[i].thum_link%>"/></td>
             <td class="toon_name"><%= mytoons[i].name %></td>
-            <td class="toon_last"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last %>"><%= mytoons[i].last %>화</a></td>
-            <td class="toon_next"><% if(mytoons[i].last+1 <= mytoons[i].latest){ %> <a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].last+1 %>"><%= mytoons[i].last +1 %>화</a><% } %></td>
-            <td class="toon_latest"><a href="/toonviewer/<%= mytoons[i].toon_index %>/<%= mytoons[i].latest %>"><%= mytoons[i].latest %>화</a></td>
+             <td class="week"><%= mytoons[i].week.toLowerCase() %></td>
+            <td class="site"><%= mytoons[i].site %></td>
+            <td class="webtoon_link"><a href="<%=mytoons[i].webtoon_link%>">바로가기</a></td>
     </tr>
     <% } %>
+
 </table>
 
 </br>

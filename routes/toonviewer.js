@@ -4,15 +4,6 @@ var request = require('request');
 var cheerio = require('cheerio');
 var async = require('async');
 
-function updateLastWebtoon(toon_index, user_id, num,cb){
-    var sql_query = "UPDATE user_toon_relation SET last=? WHERE user_id=? && toon_index=?";
-    connection.query(sql_query,[num, user_id,toon_index],function(err){
-        if(!err){
-            cb();
-        }
-    });
-}
-
 function getToonImages(toon_index, num, cb){
     var imageList = [];
     var toonUrl = "http://comic.naver.com/webtoon/detail.nhn?titleId=" + toon_index + "&no=" + num;
@@ -41,10 +32,6 @@ router.get('/:toon_index/:num',function(req,res){
         res.redirect('/');
         return;
     }
-    updateLastWebtoon(req.params.toon_index, req.user.user_id, req.params.num, function(){
-        var toonUrl = "http://comic.naver.com/webtoon/detail.nhn?titleId=" + req.params.toon_index + "&no=" + req.params.num;
-        res.redirect(toonUrl);
-
         getToonImages(req.params.toon_index, req.params.num, function(imageList){
             res.render('toonviewer',{
                 title: "zzz",
@@ -52,7 +39,7 @@ router.get('/:toon_index/:num',function(req,res){
             });
         });
 
-    })
+  //  })
 });
 
 module.exports = router;

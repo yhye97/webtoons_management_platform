@@ -62,36 +62,6 @@ router.get('/auth/logout/kakao',function (req,res) {
 allWebtoons = new Array();
 
 function getLatestToon(titleid, day ,cb) {
-    /*var url = "http://comic.naver.com/webtoon/list.nhn?titleId=" + titleid+ "&weekday="+day;
-    console.log(url);
-        request(url, function (err, res, html) {
-            if (!err) {
-                var $ = cheerio.load(html);
-                var latestLink = 'http://comic.naver.com';
-                var latest;
-                var t = $('#content > table > tbody > tr > td.title > a').first().each(function () {
-                    latestLink += $(this).attr('href');
-                    setTimeout(function () {},100);
-                    latest = latestLink.split('?')[1].split('&')[1].split('=')[1];
-                });
-
-                var latestImage;
-                $('#content > table > tbody > tr > td > a > img').first().each(function () {
-                    latestImage = $(this).attr('src');
-                    setTimeout(function () {},100);
-                });
-
-                cb({
-                    latest: latest,
-                    latestLink: latestLink,
-                    latestImage: latestImage
-                });
-
-            } else {
-                console.log("최신화 못가져왔습니다.");
-                //throw err;
-            }
-        });*/
 }
 
 function getAllToons() {
@@ -287,10 +257,6 @@ function getAllToons() {
             p.then(function() {
                 i = 0;
                 allWebtoonList.forEach(function (webtoon) {
-                   // getLatestToon(webtoon.toon_index, webtoon.week, function (latest_toon) {
-                     //   webtoon.latest = latest_toon.latest;
-                   //i++;
-                        //console.log(i + " = " + webtoon.name + " : " + webtoon.latest);
                         var sql= "INSERT INTO `toon` (toon_index, name, thum_link, webtoon_link, week, site, latest) VALUES(?) ON DUPLICATE KEY UPDATE latest=latest";
                         var values=[webtoon.toon_index, webtoon.name, webtoon.thum_link, webtoon.webtoon_link,webtoon.week, webtoon.site, webtoon.latest];
                              connection.query(sql,[values],function(err,result){
@@ -299,11 +265,6 @@ function getAllToons() {
                                  } else {
                                      console.log("웹툰 DB처리 완료!");
                                  }
-                            //[webtoon,webtoon.latest], function () {
-                             //   if (err) {
-                              //      console.log("웹툰 갱신중 에러!");
-                                //}
-                           // }
                             });
                     //});
                 })
