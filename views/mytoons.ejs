@@ -28,7 +28,8 @@
 <h1>내툰</h1>
 <p>추가한 리스트</p>
 <a href="/auth/logout/kakao">로그아웃</a>
-<a href="/setting/">수정하기</a>
+<br>
+<a href="/setting/"><img src = "/images/basket.png" height="50" witdh="50">웹툰 담기</a>
 <table>
     <tr>
         <th>썸네일</th>
@@ -36,6 +37,7 @@
         <th>요일</th>
         <th>사이트</th>
         <th>바로가기</th>
+        <th>오늘 업데이트됨</th>
     </tr>
     <!--로그인한 회원이 내툰에 웹툰이 없을시-->
     <%if (mytoons.length==0){
@@ -49,6 +51,79 @@
              <td class="week"><%= mytoons[i].week.toLowerCase() %></td>
             <td class="site"><%= mytoons[i].site %></td>
             <td class="webtoon_link"><a href="<%=mytoons[i].webtoon_link%>">바로가기</a></td>
+            <td class="Updated">
+              <% var d = new Date();
+                             if(d.getDay() == 0 && mytoons[i].week == "sun")
+                           {  %>
+                             O
+                         <%} %>
+                         <%
+                           if(d.getDay() == 0 && mytoons[i].week == "SUN")
+                         {  %>
+                           O
+                       <%} %>
+                       <%
+                         if(d.getDay() == 1 && mytoons[i].week == "mon")
+                       {  %>
+                         O
+                     <%} %>
+                     <%
+                       if(d.getDay() == 1 && mytoons[i].week == "MON")
+                     {  %>
+                       O
+                   <%} %>
+                   <%
+                     if(d.getDay() == 2 && mytoons[i].week == "tue")
+                   {  %>
+                     O
+                 <%} %>
+                 <%
+                   if(d.getDay() == 2 && mytoons[i].week == "TUE")
+                 {  %>
+                   O
+               <%} %>
+               <%
+                 if(d.getDay() == 3 && mytoons[i].week == "wed")
+               {  %>
+                 O
+             <%} %>
+             <%
+               if(d.getDay() == 3 && mytoons[i].week == "WED")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 4 && mytoons[i].week == "thu")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 4 && mytoons[i].week == "THU")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 5 && mytoons[i].week == "fri")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 5 && mytoons[i].week == "FRI")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 6 && mytoons[i].week == "sat")
+             {  %>
+               O
+             <%} %>
+             <%
+               if(d.getDay() == 6 && mytoons[i].week == "SAT")
+             {  %>
+               O
+             <%} %>
+              </td>
+
     </tr>
     <% } %>
 

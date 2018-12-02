@@ -42,9 +42,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : 'password',
+    password : '6377',
     port     : 3306,
-    database : 'ytmt'
+    database : 'YTMT'
 });
 
 app.use(session({
