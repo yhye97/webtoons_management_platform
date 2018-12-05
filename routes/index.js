@@ -231,6 +231,7 @@ function getAllToons() {
         });
     });
 
+//네이버 웹툰
     var allWeeklyToonsUrl = "http://comic.naver.com/webtoon/weekday.nhn";
     request(allWeeklyToonsUrl,function (err, res, html) {
         if(!err){
@@ -263,7 +264,7 @@ function getAllToons() {
                                  if (err) {
                                      console.log("웹툰 DB 에러 : " + err);
                                  } else {
-                                     console.log("웹툰 DB처리 완료!");
+                                    // console.log("웹툰 DB처리 완료!");
                                  }
                             });
                     //});

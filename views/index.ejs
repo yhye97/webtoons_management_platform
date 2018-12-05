@@ -3,6 +3,20 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+      <<!-- Bootstrap -->
+      <link rel="stylesheet" type="text/css"  href="/stylesheets/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.css">
+
+      <!-- Stylesheet
+          ================================================== -->
+      <link rel="stylesheet" type="text/css"  href="/stylesheets/style.css">
+      <link rel="stylesheet" type="text/css" href="/stylesheets/nivo-lightbox/nivo-lightbox.css">
+      <link rel="stylesheet" type="text/css" href="/stylesheets/nivo-lightbox/default.css">
+      <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
+
+      <link href="https://fonts.googleapis.com/css?family=Gugi&amp;subset=korean" rel="stylesheet">
       <script src="http://developers.kakao.com/sdk/js/kakao.min.js">
       function daum_click()
       {
@@ -13,116 +27,313 @@
       }
         </script>
   </head>
-    <h1><%= title %></h1>
-    <p>웹툰 리스트</p>
 
-    <a href="/auth/login/kakao" class="btn btn-block btn-lg btn-warning btn_login">로그인</a>
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+  <!-- Navigation
+      ==========================================-->
+  <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+              <a class="navbar-brand page-scroll" href="#page-top">Touché</a> </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <font size = 60>
-      다음 웹툰
-    </font>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#about" class="page-scroll">About</a></li>
+                  <li><a href="#menu" class="page-scroll">Menu</a></li>
+                  <li><a href="#portfolio" class="page-scroll">Gallery</a></li>
+                  <li><a href="/auth/login/kakao" class="page-scroll">Login</a></li>
+              </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+      </div>
+  </nav>
+  <!-- Header -->
+  <header id="header">
+      <div class="intro">
+          <div class="overlay">
+              <div class="container">
+                  <div class="row">
+                      <div class="intro-text">
+                          <h1>YTMT</h1>
+                          <p>NAVER / DAUM / WEBTOONS</p>
+                          <a href="#about" class="btn btn-custom btn-lg page-scroll">All the Webtoons</a> </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
 
-
-    <a onclick="Daum_webtoons.style.display=(Daum_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
-    <img src ='/images/daumicon.png' width="83" height="90" onclick="daum_click" />
-</a>
-<div style="display:none" id="Daum_webtoons">
-    <table>
-    <%
-    var current = "";
-    for(webtoon in list){
-
-        if(current!=list[webtoon].week && list[webtoon].site == 'daum'){
-            if(current!=""){
-        %>
-        </tr>
-        <% } %>
-        <tr>
-            <th><%= list[webtoon].week %></th>
-        <% } %>
-        <%
-        if(list[webtoon].site == 'daum')
-        {
-          %>
-            <td>
-            <a href="<%= list[webtoon].webtoon_link %>">
-                <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
-            </a>
-            <%= list[webtoon].name %>
-            </td>
-            <%
-          }
-          %>
-
-        <%
-        if(current!=list[webtoon].week) {
-            current = list[webtoon].week;
-            %>
-
-    <%
-        }
-    }
-    %>
-        </tr>
-    </table>
-    </br>
+  <!-- About Section -->
+  <div id="about">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 col-md-6 ">
+                  <div class="about-img"><img src="img/about.jpg" class="img-responsive" alt=""></div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                  <div class="about-text">
+                      <h2>Our Restaurant</h2>
+                      <hr>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
+                      <h3>Awarded Chefs</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-<br>
+  <!-- Portfolio Section -->
+  <div id="portfolio">
+      <div class="section-title text-center center">
+          <div class="overlay">
+              <h2>Gallery</h2>
+              <hr>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed.</p>
+          </div>
+      </div>
+      <div class="container">
+          <div class="row">
+              <div class="categories">
+                  <ul class="cat">
+                      <li>
+                          <ol class="type">
+                              <li><a href="#" data-filter="*" class="active">All</a></li>
+                              <li><a href="#" data-filter=".breakfast">Breakfast</a></li>
+                              <li><a href="#" data-filter=".lunch">Lunch</a></li>
+                              <li><a href="#" data-filter=".dinner">Dinner</a></li>
+                          </ol>
+                      </li>
+                  </ul>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="portfolio-items">
+                  <div class="col-sm-6 col-md-4 col-lg-4 breakfast">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/01-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/01-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 dinner">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/02-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/02-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 breakfast">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/03-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/03-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 breakfast">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/04-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/04-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 dinner">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/05-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/05-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 lunch">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/06-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/06-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 lunch">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/07-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/07-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 breakfast">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/08-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/08-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 dinner">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/09-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/09-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 lunch">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/10-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/10-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 lunch">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/11-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/11-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-4 breakfast">
+                      <div class="portfolio-item">
+                          <div class="hover-bg"> <a href="img/portfolio/12-large.jpg" title="Dish Name" data-lightbox-gallery="gallery1">
+                                  <div class="hover-text">
+                                      <h4>Dish Name</h4>
+                                  </div>
+                                  <img src="img/portfolio/12-small.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <h1><%= title %></h1>
+  <p>웹툰 리스트</p>
+
+
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <font size = 60>
+      다음 웹툰
+  </font>
+
+
+  <a onclick="Daum_webtoons.style.display=(Daum_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+      <img src ='/images/daumicon.png' width="83" height="90" onclick="daum_click" />
+  </a>
+  <div style="display:none" id="Daum_webtoons">
+      <table>
+          <%
+          var current = "";
+                  for(webtoon in list){
+
+          if(current!=list[webtoon].week && list[webtoon].site == 'daum'){
+          if(current!=""){
+          %>
+              </tr>
+          <% } %>
+          <tr>
+              <th><%= list[webtoon].week %></th>
+              <% } %>
+              <%
+              if(list[webtoon].site == 'daum')
+              {
+              %>
+                  <td>
+                      <a href="<%= list[webtoon].webtoon_link %>">
+                          <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
+                      </a>
+                      <%= list[webtoon].name %>
+                  </td>
+              <%
+              }
+              %>
+
+              <%
+              if(current!=list[webtoon].week) {
+                  current = list[webtoon].week;
+              %>
+
+              <%
+              }
+              }
+              %>
+          </tr>
+      </table>
+      </br>
+  </div>
+  <br>
 
   <font size = 60>
-    네이버 웹툰
+      네이버 웹툰
   </font>
-      <a onclick="Naver_webtoons.style.display=(Naver_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
-    <img src ='/images/navericon.png' width="83" height="90"/>
+  <a onclick="Naver_webtoons.style.display=(Naver_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+      <img src ='/images/navericon.png' width="83" height="90"/>
   </a>
   <div id="Naver_webtoons" style = "display:none">
 
       <table>
-      <%
-      var current = "";
-      for(webtoon in list){
+          <%
+          var current = "";
+                  for(webtoon in list){
 
           if(current!=list[webtoon].week && list[webtoon].site == 'naver'){
-              if(current!=""){
+          if(current!=""){
           %>
-          </tr>
+              </tr>
           <% } %>
           <tr>
               <th><%= list[webtoon].week %></th>
-          <% } %>
-          <%
-          if(list[webtoon].site == 'naver')
-          {
-            %>
-              <td>
-              <a href="<%= list[webtoon].webtoon_link %>">
-                  <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
-              </a>
-              <%= list[webtoon].name %>
-              </td>
+              <% } %>
               <%
-            }
-            %>
-
-          <%
-          if(current!=list[webtoon].week) {
-              current = list[webtoon].week;
+              if(list[webtoon].site == 'naver')
+              {
+              %>
+                  <td>
+                      <a href="<%= list[webtoon].webtoon_link %>">
+                          <img alt="img" width="83" height="90" src="<%= list[webtoon].thum_link %>"/>
+                      </a>
+                      <%= list[webtoon].name %>
+                  </td>
+              <%
+              }
               %>
 
-      <%
-          }
-      }
-      %>
+              <%
+              if(current!=list[webtoon].week) {
+                  current = list[webtoon].week;
+              %>
+
+              <%
+              }
+              }
+              %>
           </tr>
       </table>
       </br>
 
-    </div>
-
+  </div>
   </body>
 
 </html>
