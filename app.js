@@ -14,7 +14,7 @@ var yourtoons=require('./routes/yourtoons');
 var passport = require('passport');
 var setting = require('./routes/setting');
 var session = require('express-session');
-var toonviewer = require('./routes/toonviewer');
+
 
 //port
 passport.serializeUser(function(user, done) {
