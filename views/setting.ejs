@@ -12,18 +12,28 @@
 <h1>내툰</h1>
 <p>추가하거나 제거할 웹툰을 선택해주세요.</p>
 <a href="/mytoons">뒤로</a>
+<br>
+
+    <a onclick="daumtoons.style.display=(daumtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+  <img src ='/images/daumicon.png' width="83" height="90" onclick="daum_click" />
+</a>
+<div id="daumtoons" style="display:none">
+
 <table>
     <%
     var current = "";
     for(webtoon in alltoons){
+      if(alltoons[webtoon].site == "daum")
+      {
         if(current!=alltoons[webtoon].week){
             if(current!=""){
     %>
     </tr>
         <% } %>
     <tr>
-        <th><%= alltoons[webtoon].week %></th>
+      <th><%= alltoons[webtoon].week %></th>
         <% } %>
+
         <td class="<%
         for(i=0;i<mytoons.length;i++){
         if(mytoons[i].name == alltoons[webtoon].name){
@@ -46,13 +56,66 @@
         <%
         }
         }
+      }
         %>
     </tr>
 
 </table>
 </form>
+</div>
 </br>
+<br>
+<br>
 
+  <a onclick="navertoons.style.display=(navertoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
+  <img src ='/images/navericon.png' width="83" height="90"/>
+</a>
+<div id="navertoons" style="display:none">
+
+<table>
+    <%
+    var current = "";
+    for(webtoon in alltoons){
+      if(alltoons[webtoon].site == "naver")
+      {
+        if(current!=alltoons[webtoon].week){
+            if(current!=""){
+    %>
+    </tr>
+        <% } %>
+    <tr>
+      <th><%= alltoons[webtoon].week %></th>
+        <% } %>
+
+        <td class="<%
+        for(i=0;i<mytoons.length;i++){
+        if(mytoons[i].name == alltoons[webtoon].name){
+        %>registered<%
+            break;
+            }
+        }
+        %>">
+            <form method="post" action="/setting/toggle_toon">
+                <input type="hidden" name="toon_index" value="<%= alltoons[webtoon].toon_index %>">
+                <input  TYPE="IMAGE" src="<%= alltoons[webtoon].thum_link %>" name="Submit" value="Submit"  align="absmiddle">
+            </form>
+            <%= alltoons[webtoon].name; %>
+        </td>
+        <%
+        if(current!=alltoons[webtoon].week) {
+            current = alltoons[webtoon].week;
+        %>
+
+        <%
+        }
+        }
+      }
+        %>
+    </tr>
+
+</table>
+</form>
+</div>
 <body>
 
 </body>
