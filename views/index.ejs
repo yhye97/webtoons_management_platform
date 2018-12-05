@@ -20,13 +20,19 @@
       function daum_click()
       {
           if(Daum_webtoons.display == "none")
-            Daum_webtoons.display == "block"
+            Daum_webtoons.display == "block";
             if(Daum_webtoons.display = "block")
-            Daum_webtoons.display == "none"
+            Daum_webtoons.display == "none";
+      }
+      function naver_click()
+      {
+          if(Naver_webtoons.display == "none")
+              Naver_webtoons.display == "block";
+          if(Naver_webtoons.display = "block")
+              Naver_webtoons.display == "none";
       }
         </script>
   </head>
-
   <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
   <!-- Navigation
       ==========================================-->
@@ -101,7 +107,6 @@
   <font size = 30>
       다음 웹툰
   </font>
-
 
   <a onclick="Daum_webtoons.style.display=(Daum_webtoons.style.display=='none')?'block':'none';" href="javascript:void(0)">
       <img src ='/images/daumicon.png' width="83" height="90" onclick="daum_click" />
