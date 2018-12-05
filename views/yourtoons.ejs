@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>내툰</title>
+    <title>니툰</title>
     <link rel='stylesheet' href='/stylesheets/style2.css' />
     <<!-- Bootstrap -->
     <link rel="stylesheet" type="text/css"  href="/stylesheets/bootstrap.css">
@@ -54,13 +54,12 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand page-scroll" href="#page-top" style="font-family:Gugi">내툰</a> </div>
+            <a class="navbar-brand page-scroll" href="#page-top" style="font-family:Gugi">니툰</a> </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#mylist" class="page-scroll">MyList</a></li>
-                <li><a href="/setting/"><!--<img src = "/images/basket.png" height="50" witdh="50">-->웹툰 담기</a>
-                <li><a href="/yourtoons/">OtherList</a>
+                <li><a href="#mylist" class="page-scroll">OtherList</a></li>
+                <li><a href="/mytoons" class="page-scroll">MyList</a></li>
                 <li><a href="/auth/logout/kakao" class="page-scroll">Logout</a></li>
             </ul>
         </div>
@@ -75,92 +74,22 @@
         <th>요일</th>
         <th>사이트</th>
         <th>바로가기</th>
-        <th>오늘 업데이트됨</th>
     </tr>
     <!--로그인한 회원이 내툰에 웹툰이 없을시-->
-    <%if (mytoons.length==0){
+    <%if (yourtoons.length==0){
     %>
-        <th>내툰리스트에 웹툰이 없습니다! 수정하기 버튼을 눌러서 추가하세요!</th>
+        <th>니툰리스트에 웹툰이 없습니다! </th>
     <%}%>
-           <% for(i=0;i<mytoons.length; i++){
-        %><tr>
-            <td class="toon_thumbnail"><image src="<%= mytoons[i].thum_link%>"/></td>
-            <td class="toon_name"><%= mytoons[i].name %></td>
-             <td class="week"><%= mytoons[i].week.toLowerCase() %></td>
-            <td class="site"><%= mytoons[i].site %></td>
-            <td class="webtoon_link"><a href="<%=mytoons[i].webtoon_link%>">바로가기</a></td>
-            <td class="Updated">
-              <% var d = new Date();
-                             if(d.getDay() == 0 && mytoons[i].week == "sun")
-                           {  %>
-                             O
-                         <%} %>
-                         <%
-                           if(d.getDay() == 0 && mytoons[i].week == "SUN")
-                         {  %>
-                           O
-                       <%} %>
-                       <%
-                         if(d.getDay() == 1 && mytoons[i].week == "mon")
-                       {  %>
-                         O
-                     <%} %>
-                     <%
-                       if(d.getDay() == 1 && mytoons[i].week == "MON")
-                     {  %>
-                       O
-                   <%} %>
-                   <%
-                     if(d.getDay() == 2 && mytoons[i].week == "tue")
-                   {  %>
-                     O
-                 <%} %>
-                 <%
-                   if(d.getDay() == 2 && mytoons[i].week == "TUE")
-                 {  %>
-                   O
-               <%} %>
-               <%
-                 if(d.getDay() == 3 && mytoons[i].week == "wed")
-               {  %>
-                 O
-             <%} %>
-             <%
-               if(d.getDay() == 3 && mytoons[i].week == "WED")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 4 && mytoons[i].week == "thu")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 4 && mytoons[i].week == "THU")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 5 && mytoons[i].week == "fri")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 5 && mytoons[i].week == "FRI")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 6 && mytoons[i].week == "sat")
-             {  %>
-               O
-             <%} %>
-             <%
-               if(d.getDay() == 6 && mytoons[i].week == "SAT")
-             {  %>
-               O
-             <%} %>
-              </td>
+    <% for(i=0;i<yourtoons.length; i++){
+    %><tr>
+        <td class="toon_name"><%= yourtoons[i].id %></td>
+        <td class="toon_thumbnail"><image src="<%= yourtoons[i].thum_link%>"/></td>
+        <td class="toon_name"><%= yourtoons[i].name %></td>
+        <td class="week"><%= yourtoons[i].week.toLowerCase() %></td>
+        <td class="site"><%= yourtoons[i].site %></td>
+        <td class="webtoon_link"><a href="<%=yourtoons[i].webtoon_link%>">바로가기</a></td>
+
+        </td>
 
     </tr>
     <% } %>

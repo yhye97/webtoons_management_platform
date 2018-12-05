@@ -10,6 +10,7 @@ var request = require('request');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var mytoons = require('./routes/mytoons');
+var yourtoons=require('./routes/yourtoons');
 var passport = require('passport');
 var setting = require('./routes/setting');
 var session = require('express-session');
@@ -59,7 +60,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/mytoons', mytoons);
 app.use('/setting', setting);
-app.use('/toonviewer', toonviewer);
+app.use('/yourtoons', yourtoons);
 //app.use(express.static('views'));
 
 // catch 404 and forward to error handler
